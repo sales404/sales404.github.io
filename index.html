@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nil - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Partículas de fondo animadas */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+            animation: fadeInUp 1.4s ease;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.6s ease;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #fff;
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Secciones */
+        section {
+            padding: 100px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 50px;
+            text-align: center;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Sobre mí */
+        .about-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .about-content:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Proyectos */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .project-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #f093fb;
+        }
+
+        .project-card p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Habilidades */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .skill-item h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .skill-bar {
+            background: rgba(0, 0, 0, 0.2);
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+            border-radius: 10px;
+            animation: growBar 2s ease-in-out;
+        }
+
+        @keyframes growBar {
+            from { width: 0; }
+        }
+
+        /* Contacto */
+        .contact-content {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .social-link:hover {
+            background: #fff;
+            color: #667eea;
+            transform: translateY(-5px) rotate(360deg);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content .tagline {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .about-content, .contact-content {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Partículas de fondo -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Nil</h1>
+            <p class="tagline">🚀 Estudiante · Programador · Creativo</p>
+            <p class="description">
+                15 años, Barcelona. Apasionado por la programación, las matemáticas y la calistenia. 
+                Siempre aprendiendo cosas nuevas y creando proyectos increíbles.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
+                <a href="#contact" class="btn btn-secondary">Contacto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre mí -->
+    <section id="about">
+        <div class="container">
+            <h2>💫 Sobre Mí</h2>
+            <div class="about-content">
+                <p>
+                    ¡Hola! Soy Nil, tengo 15 años y vivo en Barcelona. Me encanta la programación 
+                    y estoy constantemente aprendiendo nuevas tecnologías y creando proyectos.
+                </p>
+                <p>
+                    Además de programar, también entreno calistenia y me fascina resolver problemas 
+                    matemáticos. Creo que la mejor forma de aprender es haciendo, así que siempre 
+                    estoy trabajando en algún proyecto nuevo.
+                </p>
+                <p>
+                    Mi objetivo es convertirme en un desarrollador increíble y crear cosas que 
+                    realmente importen. ¿Quieres saber más? ¡Sigue explorando!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyectos -->
+    <section id="projects">
+        <div class="container">
+            <h2>🚀 Mis Proyectos</h2>
+            <div class="projects-grid">
+                <!-- PROYECTO 1 - EDITABLE -->
+                <div class="project-card">
+                    <h3>Level Up Life</h3>
+                    <p>
+                        Sistema gamificado para mejorar mi vida día a día. Incluye misiones diarias, 
+                        objetivos semanales y mensuales, y un sistema de recompensas.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Gamificación</span>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 2 - EDITABLE -->
+                <div class="project-card">
+                    <h3>Portfolio Personal</h3>
+                    <p>
+                        Mi portfolio web creativo y moderno para mostrar mis proyectos y habilidades. 
+                        Totalmente responsive y con animaciones.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <!-- PROYECTO 3 - EDITABLE -->
+                <div class="project-card">
+                    <h3>Tu Próximo Proyecto</h3>
+                    <p>
+                        Aquí puedes añadir tu siguiente proyecto increíble. ¡Solo edita el HTML 
+                        y cambia este texto por tu proyecto real!
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Proyecto</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Habilidades -->
+    <section id="skills">
+        <div class="container">
+            <h2>🛠️ Habilidades</h2>
+            <div class="skills-grid">
+                <!-- EDITABLE - Cambia los porcentajes en style="width: X%" -->
+                <div class="skill-item">
+                    <h3>Python</h3>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 70%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <h3>JavaScript</h3>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 60%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <h3>HTML/CSS</h3>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 75%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <h3>Matemáticas</h3>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <h3>Resolución de Problemas</h3>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <h3>Creatividad</h3>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contact">
+        <div class="container">
+            <h2>📬 Contacto</h2>
+            <div class="contact-content">
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">
+                    ¿Quieres colaborar en un proyecto o simplemente charlar? ¡Escríbeme!
+                </p>
+                <p style="font-size: 1.1rem; opacity: 0.9;">
+                    📧 tuemail@ejemplo.com
+                </p>
+                
+                <!-- EDITABLE - Cambia los enlaces por tus redes sociales -->
+                <div class="social-links">
+                    <a href="https://github.com/tuusuario" class="social-link" target="_blank" title="GitHub">
+                        🐙
+                    </a>
+                    <a href="https://twitter.com/tuusuario" class="social-link" target="_blank" title="Twitter">
+                        🐦
+                    </a>
+                    <a href="https://linkedin.com/in/tuusuario" class="social-link" target="_blank" title="LinkedIn">
+                        💼
+                    </a>
+                    <a href="mailto:tuemail@ejemplo.com" class="social-link" title="Email">
+                        ✉️
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Nil. Hecho con 💜 en Barcelona</p>
+    </footer>
+
+    <script>
+        // Crear partículas animadas
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scroll para los enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación de las barras de habilidades al hacer scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.skill-progress').forEach(bar => {
+                        bar.style.animation = 'growBar 2s ease-in-out';
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const skillsSection = document.querySelector('#skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+    </script>
+</body>
+</html>
